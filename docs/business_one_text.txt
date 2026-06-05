@@ -1,0 +1,46 @@
+5 Business question:
+Vòng đời Pull Request (PR Lifecycle):
+ Thời gian trung bình từ lúc tạo (open) đến lúc được duyệt (merge) hoặc đóng (close) của một PR ở môi trường Global có nhanh và tối ưu hơn so với sinh viên FPT không?
+Insight:
+ Trục trung vị của FPT thấp hơn Global. Sinh viên FPT đóng/duyệt PR nhanh hơn. 
+Giải thích:
+ Dự án học thuật tại FPT thường chạy theo các sprint ngắn hạn của học kỳ. Do áp lực deadline môn học, sinh viên có xu hướng approve nhanh để kịp tiến độ. Ngược lại, các dự án mã nguồn mở toàn cầu đòi hỏi nhiều lớp kiểm duyệt, test tự động và sự đồng thuận của nhiều maintainer quốc tế nên thời gian "ngâm" PR lâu hơn. 
+Tỷ lệ Rủi ro & Từ chối (Rejection Rate):
+ Tỷ lệ các PR bị đóng mà không được merge (hoặc bị revert) ở các dự án mã nguồn mở khác biệt như thế nào so với môi trường đồ án học thuật?
+Insight: 
+Tỷ lệ PR bị từ chối (Rejected) của sinh viên FPT University chiếm khoảng 9%, cao hơn rõ rệt so với môi trường Global PR (chỉ khoảng hơn 6%).
+ 
+Giải thích: 
+Lập trình viên Global thảo luận rất kỹ hoặc test local kỹ lưỡng trước khi mở PR công khai để tránh làm phiền maintainers. Ngược lại, sinh viên FPT có thói quen thử và sai, coi GitHub như kho lưu trữ tạm; khi gặp conflict hoặc up nhầm nhánh, thay vì fix, sinh viên thường đóng luôn PR cũ để mở một cái mới. 
+Quy mô thay đổi mã nguồn (Code Chunks):
+ Khối lượng thay đổi (số dòng code thêm/bớt, số lượng file) trên mỗi PR ở môi trường công nghiệp có xu hướng nhỏ, chia tách rõ ràng hơn so với thói quen commit của sinh viên không?
+Insight: 
+Global PR tập trung sửa ít file hơn (hầu hết dưới 10 file/PR). Sinh viên FPT có độ phân tán rộng và số lượng file xáo trộn trong một PR lớn hơn nhiều. 
+Giải thích: 
+Giới công nghiệp tuân thủ nguyên tắc 
+Atomic PR
+ – chia nhỏ PR, mỗi lần chỉ giải quyết một tính năng hoặc một bug duy nhất để dễ kiểm duyệt. Sinh viên FPT có thói quen gộp bài, làm cả tuần rồi nộp một thể, gây quá tải và rủi ro lớn cho người review. 
+Văn hóa Kiểm duyệt (Review Culture):
+ Mức độ tương tác (số lượng comments, số lượt review) trên mỗi PR của các lập trình viên Global có cao và khắt khe hơn so với quy trình của sinh viên FPT không?
+Insight: 
+Mức độ tương tác: 
+comments
+ thông thường và 
+review_comments
+ chuyên sâu trên dòng code của môi trường Global PR cao hơn gấp nhiều lần so với FPT University. Sinh viên FPT có lượng bình luận thảo luận trên PR rất thấp, gần như bằng 0. 
+Giải thích: 
+Sự thiếu hụt văn hóa Code Review trong môi trường học thuật. Sinh viên FPT thường trao đổi trực tiếp khi ngồi cạnh nhau hoặc nhắn tin qua chat thay vì log lại nhận xét trên GitHub. Ngược lại, các dự án Global bắt buộc phải giao tiếp bất đồng bộ qua comment do lệch múi giờ và khoảng cách địa lý. 
+Yếu tố Cảnh báo Sớm (Early Warning Features):
+ Những biến số nào (thời gian mở PR, số dòng code, số người review) có sức ảnh hưởng lớn nhất để mô hình Hồi quy Logistic dự đoán chính xác xác suất thất bại của một PR mới?
+Insight: 
+changed_files
+ và 
+comments
+ là hai biến có trọng số dương cao nhất, tác động lớn nhất đến nguy cơ một PR bị từ chối. 
+additions
+ hay 
+deletions
+ 
+có trọng số âm hoặc rất nhỏ, ít tác động trực tiếp một PR có bị reject hay không hơn là số lượng file tổng thể bị xáo trộn. 
+Giải thích: 
+PR càng xáo trộn nhiều file và càng bị tranh luận qua lại nhiều thì tỷ lệ lỗi và bị reject càng cao. Đây là logic cốt lõi để xây dựng hệ thống cảnh báo sớm: Ngay khi một PR được mở, nếu số lượng file sửa vượt ngưỡng an toàn, hệ thống sẽ cảnh báo rủi ro để reviewer chú ý hoặc yêu cầu tác giả chia nhỏ code. 
