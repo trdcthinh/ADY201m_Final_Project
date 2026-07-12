@@ -1,0 +1,193 @@
+TY  - CONF
+AU  - Bacchelli, Alberto
+AU  - Bird, Christian
+TI  - Expectations, outcomes, and challenges of modern code review
+T2  - 2013 35th International Conference on Software Engineering (ICSE)
+PY  - 2013
+SP  - 712
+EP  - 721
+PB  - IEEE
+ER  - 
+
+TY  - JOUR
+AU  - Chawla, Nitesh V.
+AU  - Bowyer, Kevin W.
+AU  - Hall, Lawrence O.
+AU  - Kegelmeyer, W. Philip
+TI  - SMOTE: synthetic minority over-sampling technique
+T2  - Journal of Artificial Intelligence Research
+VL  - 16
+PY  - 2002
+SP  - 321
+EP  - 357
+ER  - 
+
+TY  - CONF
+AU  - Gousios, Georgios
+AU  - Pinzger, Martin
+AU  - Deursen, Arie van
+TI  - An exploratory study of the pull-based software development model
+T2  - Proceedings of the 36th International Conference on Software Engineering
+PY  - 2014
+SP  - 345
+EP  - 355
+ER  - 
+
+TY  - CONF
+AU  - Thung, Ferdian
+AU  - Bissyande, Tegawendé F.
+AU  - Lo, David
+AU  - Jiang, Lingxiao
+TI  - An empirical study of bugs in machine learning systems
+T2  - 2012 23rd IEEE International Symposium on Software Reliability Engineering (ISSRE)
+PY  - 2012
+SP  - 273
+EP  - 282
+PB  - IEEE
+ER  - 
+
+TY  - CONF
+AU  - Tsay, Jason
+AU  - Dabbish, Laura
+AU  - Herbsleb, James
+TI  - Influence of social and technical factors for evaluating contribution in GitHub
+T2  - Proceedings of the 36th International Conference on Software Engineering
+PY  - 2014
+SP  - 356
+EP  - 366
+ER  - 
+
+TY  - CONF
+AU  - Zou, Weiqin
+AU  - Xia, Xin
+AU  - Zhang, Weiqiang
+AU  - Chen, Zhenyu
+AU  - Lo, David
+TI  - An empirical study of bug fixing rate
+T2  - 2015 IEEE 39th Annual Computer Software and Applications Conference (COMPSAC)
+PY  - 2015
+SP  - 254
+EP  - 263
+PB  - IEEE
+ER  - 
+
+TY  - JOUR
+AU  - Sadowski, Caitlin
+AU  - Souter, Emma
+AU  - Carroll, John C.
+AU  - Collison, Dustin
+AU  - Harris, Chris
+AU  - Levin, Andrew
+TI  - Modern code review: a case study at Google
+T2  - Proceedings of the 40th International Conference on Software Engineering
+PY  - 2018
+SP  - 181
+EP  - 190
+ER  - 
+
+TY  - JOUR
+AU  - Gousios, Georgios
+AU  - Zaidman, Andy
+AU  - Storey, Margaret-Anne
+AU  - Van Deursen, Arie
+TI  - Work practices and challenges in pull-based development: The contributor's perspective
+T2  - Proceedings of the 37th International Conference on Software Engineering
+PY  - 2015
+SP  - 285
+EP  - 296
+ER  - 
+
+TY  - JOUR
+AU  - Jiang, Y.
+AU  - Adams, B.
+AU  - German, D. M.
+TI  - Will My Patch Make It? And How Fast? Case Study on the Linux Kernel
+T2  - 2013 10th Working Conference on Mining Software Repositories (MSR)
+PY  - 2013
+SP  - 101
+EP  - 110
+ER  - 
+
+TY  - JOUR
+AU  - Thongtanunam, Patanamon
+AU  - Tantithamthavorn, Chakkrit
+AU  - Kula, Raula Gaikovina
+AU  - Matsumoto, Kenichi
+TI  - Who should review my code? A file location-based code-reviewer recommendation approach for Modern Code Review
+T2  - 2015 IEEE 22nd International Conference on Software Analysis, Evolution, and Reengineering (SANER)
+PY  - 2015
+SP  - 141
+EP  - 150
+ER  - 
+
+TY  - JOUR
+AU  - Zhang, Yang
+AU  - Yin, Gang
+AU  - Yu, Yue
+AU  - Wang, Huaimin
+TI  - Investigating social media in GitHub's pull-requests
+T2  - Proceedings of the 18th International Conference on Computer Supported Cooperative Work and Social Computing
+PY  - 2015
+SP  - 821
+EP  - 831
+ER  - 
+
+TY  - JOUR
+AU  - Fan, Y.
+AU  - Xia, X.
+AU  - Lo, D.
+AU  - Hassan, A. E.
+TI  - Early prediction of merge outcomes for pull requests
+T2  - IEEE Transactions on Software Engineering
+PY  - 2018
+VL  - 44
+IS  - 8
+SP  - 715
+EP  - 732
+ER  - 
+
+TY  - JOUR
+AU  - Zanjani, Motahareh Bahrami
+AU  - Kagdi, Huzefa
+AU  - Bird, Christian
+TI  - Automatically recommending peer reviewers in modern code review
+T2  - IEEE Transactions on Software Engineering
+PY  - 2015
+VL  - 42
+IS  - 6
+SP  - 530
+EP  - 543
+ER  - 
+
+TY  - JOUR
+AU  - Wang, P.
+AU  - Zhang, H.
+TI  - E-PRedictor: An approach for early prediction of pull request acceptance
+T2  - Science China Information Sciences
+PY  - 2022
+VL  - 65
+IS  - 10
+SP  - 202101
+ER  - 
+
+TY  - JOUR
+AU  - Li, X.
+AU  - Li, Z.
+AU  - Wu, Y.
+TI  - Prioritizing Pull Requests Through Dual Prediction of Acceptance and Integrator Response
+T2  - IEEE Transactions on Reliability
+PY  - 2023
+SP  - 1
+EP  - 15
+ER  - 
+
+TY  - JOUR
+AU  - Pinto, Gustavo
+AU  - Steinmacher, Igor
+AU  - Gerosa, Marco Aurelio
+TI  - More common than you think: An in-depth study of casual contributors
+T2  - 2016 IEEE 23rd International Conference on Software Analysis, Evolution, and Reengineering (SANER)
+PY  - 2016
+SP  - 112
+EP  - 123
+ER  - 
