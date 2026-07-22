@@ -12,7 +12,7 @@
 - **Course**: ADY201m - Applied Data Analytics
 - **Term**: Summer 2026
 - **Team**: Group 3
-- **Official Documentation**: [docs/Final_ADY201m_Report_G3.docx](file:///e:/_FPT_UNI_/Ki%203/ADY/ADY_Final_Project/docs/Final_ADY201m_Report_G3.docx)
+- **Official Documentation**: [docs/Final_ADY201m_Report.docx](file:///e:/_FPT_UNI_/Ki%203/ADY/ADY_Final_Project/docs/Final_ADY201m_Report.docx)
 
 ---
 
@@ -54,11 +54,8 @@ ADY201m_Final_Project/
 │   └── README.md                # DB Schema Documentation
 │
 ├── docs/                        # Official Project Deliverables
-│   ├── Final_ADY201m_Report_G3.docx # Official Group 3 Report (Word Document)
-│   ├── Abstract_Final_Project.docx  # Academic Research Abstract
-│   ├── ADY201m-Final-Project.md     # Markdown version of full report
+│   ├── Final_ADY201m_Report.docx    # Official Report (Word Document)
 │   ├── 6_References_EndNote.ris     # RIS/IEEE standard references
-│   ├── AICT2026_Template_Springer.docx # Springer AICT 2026 paper template
 │   └── figures/                 # High-resolution (300 DPI) publication charts
 │       ├── bq1_pr_lifecycle.png
 │       ├── bq2_rejection_rates.png
@@ -192,7 +189,7 @@ pytest tests/ -v
 - **Môn học**: ADY201m - Applied Data Analytics
 - **Học kỳ**: Summer 2026
 - **Nhóm thực hiện**: Group 3
-- **Báo cáo chính thức**: [docs/Final_ADY201m_Report_G3.docx](file:///e:/_FPT_UNI_/Ki%203/ADY/ADY_Final_Project/docs/Final_ADY201m_Report_G3.docx)
+- **Báo cáo chính thức**: [docs/Final_ADY201m_Report.docx](file:///e:/_FPT_UNI_/Ki%203/ADY/ADY_Final_Project/docs/Final_ADY201m_Report.docx)
 
 ---
 
