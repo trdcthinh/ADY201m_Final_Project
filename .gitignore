@@ -34,3 +34,7 @@ models/catboost_info/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+.DS_Store
+
+# Large files
+*.pdf
