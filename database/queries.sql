@@ -1,23 +1,23 @@
 -- ============================================================
--- SQL DATA WRANGLING & ANALYSIS QUERIES
--- Designed for SQLite
+-- SQL DATA WRANGLING & ANALYTICS QUERIES
+-- Target DBMS: SQLite 3.x
+-- Objectives: Data Validation, Feature Engineering, Business Intelligence
 -- ============================================================
 
--- BẬT hỗ trợ khóa ngoại
 PRAGMA foreign_keys = ON;
 
 -- ============================================================
 -- PHẦN 1: KIỂM TRA THỐNG KÊ TỔNG QUAN (DB HEALTH CHECK)
 -- ============================================================
 
--- 1.1. Kiểm tra số lượng dòng trong các bảng
+-- 1.1. Thống kê tổng số lượng bản ghi trên từng bảng
 SELECT 'repositories' AS table_name, COUNT(*) AS total_rows FROM repositories
 UNION ALL
 SELECT 'pull_requests' AS table_name, COUNT(*) AS total_rows FROM pull_requests
 UNION ALL
 SELECT 'raw_pull_requests' AS table_name, COUNT(*) AS total_rows FROM raw_pull_requests;
 
--- 1.2. Kiểm tra tỷ lệ phân bổ dữ liệu FPT vs Global
+-- 1.2. Phân bổ mẫu dữ liệu: FPT University vs. Global PRs
 SELECT 
     is_fpt,
     CASE is_fpt WHEN 1 THEN 'FPT University' ELSE 'Global PRs' END AS group_name,
@@ -26,7 +26,7 @@ SELECT
 FROM pull_requests
 GROUP BY is_fpt;
 
--- 1.3. Thống kê ngôn ngữ lập trình phổ biến nhất trong tập dữ liệu
+-- 1.3. Thống kê phân bổ ngôn ngữ lập trình theo tập dữ liệu
 SELECT 
     repo_language,
     COUNT(*) AS repo_count,
@@ -39,15 +39,15 @@ ORDER BY repo_count DESC;
 
 
 -- ============================================================
--- PHẦN 2: DATA WRANGLING & DATA CLEANING VIA SQL VIEWS
+-- PHẦN 2: CHUẨN HÓA & TRÍCH XUẤT ĐẶC TRƯNG (DATA WRANGLING VIEW)
 -- ============================================================
 
--- Tạo View chuẩn hóa dữ liệu để phục vụ cho phân tích và làm sạch
--- View này xử lý các vấn đề:
--- 1. Xử lý giá trị NULL: Thay thế title/body trống bằng giá trị mặc định.
--- 2. Định dạng thời gian: Chuyển đổi định dạng chuỗi Datetime (ISO 8601) thành định dạng chuẩn SQLite.
--- 3. Phân tách thời gian: Trích xuất giờ tạo PR (hour) và ngày trong tuần (day of week) phục vụ dự đoán.
--- 4. Phân loại trạng thái PR: Xác định PR đã được Merge (Thành công) hay Bị đóng mà không merge (Bị từ chối).
+-- View view_pr_clean thực hiện:
+-- 1. Xử lý giá trị thiếu (COALESCE cho title, body_len, duration).
+-- 2. Chuẩn hóa chuỗi thời gian sang định dạng DATETIME (yyyy-mm-dd hh:mm:ss).
+-- 3. Trích xuất đặc trưng thời gian (created_hour, created_day_of_week).
+-- 4. Xác định nhãn phân loại (is_merged: 1 = Merged, 0 = Rejected/Closed).
+
 DROP VIEW IF EXISTS view_pr_clean;
 CREATE VIEW view_pr_clean AS
 SELECT 
@@ -59,17 +59,16 @@ SELECT
     p.user_login,
     p.user_type,
     
-    -- Chuyển đổi Datetime về chuẩn SQLite yyyy-mm-dd hh:mm:ss
+    -- Định dạng Datetime chuẩn ISO
     datetime(p.created_at) AS created_datetime,
     datetime(p.closed_at) AS closed_datetime,
     datetime(p.merged_at) AS merged_datetime,
     
-    -- Trích xuất các thuộc tính thời gian
+    -- Trích xuất đặc trưng thời gian phục vụ mô hình hóa
     CAST(strftime('%H', p.created_at) AS INTEGER) AS created_hour,
-    -- 0=Chủ nhật, 1=Thứ hai, ..., 6=Thứ bảy
     CAST(strftime('%w', p.created_at) AS INTEGER) AS created_day_of_week,
     
-    -- Xử lý thời gian duration
+    -- Chuẩn hóa thời gian xử lý (Phút & Giờ)
     COALESCE(p.duration_minutes, 0.0) AS duration_minutes,
     ROUND(COALESCE(p.duration_minutes, 0.0) / 60.0, 2) AS duration_hours,
     
@@ -80,28 +79,25 @@ SELECT
     p.deletions,
     p.changed_files,
     
-    -- Các trường từ repo liên kết
     r.repo_language,
     r.repo_stars,
     r.repo_forks,
     
-    -- Nhãn phân loại
     p.is_fpt,
     p.keyword,
     
-    -- Biến phân loại PR: 1 = Đã Merge (Thành công), 0 = Đóng mà không Merge (Bị từ chối/Revert)
+    -- Nhãn kết quả PR (Target Variable)
     CASE WHEN p.merged_at IS NOT NULL THEN 1 ELSE 0 END AS is_merged
 FROM pull_requests p
 JOIN repositories r ON p.repo_id = r.repo_id;
 
 
 -- ============================================================
--- PHẦN 3: GIẢI QUYẾT 5 CÂU HỎI KINH DOANH (BUSINESS QUESTIONS)
+-- PHẦN 3: PHÂN TÍCH VÀ GIẢI QUYẾT 5 CÂU HỎI KINH DOANH
 -- ============================================================
 
 -- Câu hỏi 1: Vòng đời Pull Request (PR Lifecycle)
--- Thời gian xử lý PR trung bình và trung vị (Median proxy) của FPT vs Global.
--- (Chỉ tính cho các PR đã được merge để phản ánh thời gian hoàn thành công việc).
+-- So sánh thời gian xử lý PR trung bình giữa sinh viên FPT và cộng đồng quốc tế.
 SELECT 
     CASE is_fpt WHEN 1 THEN 'FPT University' ELSE 'Global PRs' END AS group_name,
     COUNT(*) AS merged_prs_count,
@@ -113,8 +109,8 @@ FROM view_pr_clean
 WHERE is_merged = 1
 GROUP BY is_fpt;
 
--- Câu hỏi 2: Tỷ lệ Từ chối & Rủi ro (Rejection Rate)
--- Tỷ lệ PR bị đóng mà không được merge (is_merged = 0) của FPT vs Global.
+-- Câu hỏi 2: Tỷ lệ Từ chối PR (Rejection Rate Analysis)
+-- Đánh giá tỷ lệ PR bị đóng mà không được tích hợp (is_merged = 0).
 SELECT 
     CASE is_fpt WHEN 1 THEN 'FPT University' ELSE 'Global PRs' END AS group_name,
     COUNT(*) AS total_prs,
@@ -124,8 +120,8 @@ SELECT
 FROM view_pr_clean
 GROUP BY is_fpt;
 
--- Câu hỏi 3: Quy mô thay đổi mã nguồn (Code Chunks)
--- So sánh quy mô commit trung bình (số additions, deletions, changed_files)
+-- Câu hỏi 3: Quy mô thay đổi mã nguồn (Code Churn Metrics)
+-- So sánh khối lượng dòng code thêm, xóa và số lượng file chỉnh sửa.
 SELECT 
     CASE is_fpt WHEN 1 THEN 'FPT University' ELSE 'Global PRs' END AS group_name,
     ROUND(AVG(additions), 2) AS avg_additions,
@@ -135,21 +131,19 @@ SELECT
 FROM view_pr_clean
 GROUP BY is_fpt;
 
--- Câu hỏi 4: Văn hóa Kiểm duyệt & Tương tác (Review Culture)
--- So sánh mức độ thảo luận trên PR (comments, review_comments, commits)
+-- Câu hỏi 4: Mức độ tương tác và kiểm duyệt (Review Culture & Collaboration)
+-- Phân tích tần suất thảo luận, nhận xét mã nguồn và tỷ lệ PR không có phản hồi.
 SELECT 
     CASE is_fpt WHEN 1 THEN 'FPT University' ELSE 'Global PRs' END AS group_name,
     ROUND(AVG(comments), 2) AS avg_conversation_comments,
     ROUND(AVG(review_comments), 2) AS avg_inline_review_comments,
     ROUND(AVG(commits), 2) AS avg_commits_count,
-    -- Tỷ lệ PR không có bình luận nào
     ROUND(SUM(CASE WHEN comments = 0 AND review_comments = 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS no_comment_pr_rate_percent
 FROM view_pr_clean
 GROUP BY is_fpt;
 
--- Câu hỏi 5: Phân tích tương quan đặc trưng (Early Warning Correlation Proxy)
--- Xem xét tỷ lệ bị từ chối (rejection rate) theo quy mô số file thay đổi
--- (Để kiểm chứng xem có đúng là sửa càng nhiều file thì tỷ lệ bị reject càng cao không)
+-- Câu hỏi 5: Tương quan giữa Quy mô PR và Tỷ lệ Từ chối (PR Size vs. Rejection Risk)
+-- Phân nhóm PR theo số file thay đổi để khảo sát xác suất bị từ chối.
 SELECT 
     CASE is_fpt WHEN 1 THEN 'FPT University' ELSE 'Global PRs' END AS group_name,
     CASE 
@@ -169,3 +163,4 @@ GROUP BY is_fpt,
         ELSE 'Huge (>15 files)'
     END
 ORDER BY is_fpt, pr_size;
+
