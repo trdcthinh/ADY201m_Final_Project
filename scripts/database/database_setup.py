@@ -66,10 +66,14 @@ def main():
         if repo_id is None:
             continue
         pr_records.append((
-            int(row['pr_id']), repo_id, int(row['pr_number']), str(row.get('title', '')),
+            int(row['pr_id']), repo_id, int(row['pr_number']), 
+            str(row['title']) if pd.notna(row.get('title')) else None,
             int(row.get('body_len', 0) if pd.notna(row.get('body_len')) else 0),
-            str(row.get('user_login', '')), str(row.get('user_type', 'User')),
-            str(row.get('created_at', '')), str(row.get('closed_at', '')), str(row.get('merged_at', '')),
+            str(row['user_login']) if pd.notna(row.get('user_login')) else None, 
+            str(row['user_type']) if pd.notna(row.get('user_type')) else 'User',
+            str(row['created_at']) if pd.notna(row.get('created_at')) else None, 
+            str(row['closed_at']) if pd.notna(row.get('closed_at')) else None, 
+            str(row['merged_at']) if pd.notna(row.get('merged_at')) else None,
             float(row.get('duration_minutes', 0) if pd.notna(row.get('duration_minutes')) else 0),
             int(row.get('comments', 0) if pd.notna(row.get('comments')) else 0),
             int(row.get('review_comments', 0) if pd.notna(row.get('review_comments')) else 0),
@@ -77,7 +81,8 @@ def main():
             int(row.get('additions', 0) if pd.notna(row.get('additions')) else 0),
             int(row.get('deletions', 0) if pd.notna(row.get('deletions')) else 0),
             int(row.get('changed_files', 0) if pd.notna(row.get('changed_files')) else 0),
-            int(row.get('is_fpt', 0)), str(row.get('keyword', ''))
+            int(row.get('is_fpt', 0)), 
+            str(row['keyword']) if pd.notna(row.get('keyword')) else 'General'
         ))
 
     cursor.executemany("""
